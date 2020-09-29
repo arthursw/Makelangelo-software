@@ -50,6 +50,9 @@ public final class MakelangeloRobotSettings implements Serializable {
 	private double limitRight;
 	private double limitBottom;
 	private double limitTop;
+	// machine home position
+	private double homeX;
+	private double homeY;
 	// paper area, in mm
 	private double paperLeft;
 	private double paperRight;
@@ -135,6 +138,9 @@ public final class MakelangeloRobotSettings implements Serializable {
 		paperRight = pw/2;
 		paperMargin = 0.9;
 
+		homeX = 0;
+		homeY = paperBottom;
+
 		penDownColor = penDownColorDefault = new ColorRGB(0,0,0); // BLACK
 		penUpColor = new ColorRGB(0,255,0); // blue
 		startingPositionIndex = 4;
@@ -188,20 +194,20 @@ public final class MakelangeloRobotSettings implements Serializable {
 	}
 
 	public Point2D getHome() {
-		return getHardwareProperties().getHome();
+		return new Point2D(homeX, homeY);
 	}
 	/**
 	 * @return home X coordinate in mm
 	 */ 
 	public double getHomeX() {
-		return getHome().x;
+		return homeX;
 	}
 	
 	/**
 	 * @return home Y coordinate in mm
 	 */
 	public double getHomeY() {
-		return getHome().y;
+		return homeY;
 	}
 	
 	public String getGCodeSetPositionAtHome() {
@@ -213,7 +219,8 @@ public final class MakelangeloRobotSettings implements Serializable {
 		String xAxis = "M101 A0 T"+StringHelper.formatDouble(limitRight)+" B"+StringHelper.formatDouble(limitLeft);
 		String yAxis = "M101 A1 T"+StringHelper.formatDouble(limitTop)+" B"+StringHelper.formatDouble(limitBottom);
 		String zAxis = "M101 A2 T170 B10";
-		result = xAxis+"\n"+yAxis+"\n"+zAxis; 
+
+		result = xAxis+"\n"+yAxis+"\n"+zAxis;
 		return result;
 	}
 
@@ -451,6 +458,9 @@ public final class MakelangeloRobotSettings implements Serializable {
 		limitLeft   = Double.valueOf(uniqueMachinePreferencesNode.get("limit_left", Double.toString(limitLeft)));
 		limitRight  = Double.valueOf(uniqueMachinePreferencesNode.get("limit_right", Double.toString(limitRight)));
 
+		homeX   = Double.valueOf(uniqueMachinePreferencesNode.get("home_x", Double.toString(homeX)));
+		homeY  	= Double.valueOf(uniqueMachinePreferencesNode.get("home_y", Double.toString(homeY)));
+
 		paperLeft   = Double.parseDouble(uniqueMachinePreferencesNode.get("paper_left",Double.toString(paperLeft)));
 		paperRight  = Double.parseDouble(uniqueMachinePreferencesNode.get("paper_right",Double.toString(paperRight)));
 		paperTop    = Double.parseDouble(uniqueMachinePreferencesNode.get("paper_top",Double.toString(paperTop)));
@@ -537,6 +547,8 @@ public final class MakelangeloRobotSettings implements Serializable {
 		uniqueMachinePreferencesNode.put("limit_bottom", Double.toString(limitBottom));
 		uniqueMachinePreferencesNode.put("limit_right", Double.toString(limitRight));
 		uniqueMachinePreferencesNode.put("limit_left", Double.toString(limitLeft));
+		uniqueMachinePreferencesNode.put("home_x", Double.toString(homeX));
+		uniqueMachinePreferencesNode.put("home_y", Double.toString(homeY));
 		uniqueMachinePreferencesNode.put("acceleration", Double.toString(accelerationMax));
 		uniqueMachinePreferencesNode.put("startingPosIndex", Integer.toString(startingPositionIndex));
 
@@ -608,6 +620,11 @@ public final class MakelangeloRobotSettings implements Serializable {
 		this.limitRight = width/2.0;
 		this.limitBottom = -height/2.0;
 		this.limitTop = height/2.0;
+	}
+
+	public void setHome(double x, double y) {
+		this.homeX = x;
+		this.homeY = y;
 	}
 	
 	public void setPaperMargin(double paperMargin) {

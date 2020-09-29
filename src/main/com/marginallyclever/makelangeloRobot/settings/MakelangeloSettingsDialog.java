@@ -47,6 +47,7 @@ implements ActionListener {
 	private JPanel modelPanel;
 	protected PanelAdjustMachine panelAdjustMachine;
 	protected PanelAdjustPaper panelAdjustPaper;
+	protected PanelAdjustHome panelAdjustHome;
 	protected PanelAdjustPen panelAdjustPen;
 
 	protected int dialogWidth = 450;
@@ -94,8 +95,13 @@ implements ActionListener {
 	  if (result == JOptionPane.OK_OPTION) {
 		  panelAdjustMachine.save();
 		  panelAdjustPaper.save();
+		  panelAdjustHome.save();
 		  panelAdjustPen.save();
 		  robot.getSettings().saveConfig();
+			if (robot.getConnection() == null || !robot.isPortConfirmed()) {
+				robot.setPenX((float) robot.getSettings().getHomeX());
+				robot.setPenY((float) robot.getSettings().getHomeY());
+			}
 		  robot.sendConfig();
 	  } else {
 		  robot.getSettings().setHardwareVersion(originalHardwareVersion);
@@ -169,6 +175,9 @@ implements ActionListener {
 
 	  panelAdjustPaper = new PanelAdjustPaper(robot);
 	  panes.addTab(Translator.get("MenuAdjustPaper"),panelAdjustPaper);
+
+	  panelAdjustHome = new PanelAdjustHome(robot);
+	  panes.addTab(Translator.get("MenuAdjustHome"),panelAdjustHome);
 
 	  panelAdjustPen = new PanelAdjustPen(robot);
 	  panes.addTab(Translator.get("MenuAdjustTool"),panelAdjustPen);

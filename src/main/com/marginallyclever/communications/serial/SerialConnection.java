@@ -21,7 +21,7 @@ import com.marginallyclever.makelangelo.log.Log;
  */
 public final class SerialConnection implements SerialPortEventListener, NetworkConnection {
 	private SerialPort serialPort;
-	private static final int BAUD_RATE = 57600;
+	private static final int BAUD_RATE = 115200;
 
 	private TransportLayer transportLayer;
 	private String connectionName = "";

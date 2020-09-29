@@ -640,7 +640,7 @@ public class MakelangeloRobot implements NetworkConnectionListener {
 
 	public void findHome() {
 		this.raisePen();
-		sendLineToRobot("G28");
+		// sendLineToRobot("G28");
 		setPenX((float) settings.getHomeX());
 		setPenY((float) settings.getHomeY());
 	}

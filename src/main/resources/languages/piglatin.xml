@@ -49,6 +49,17 @@
 		<value>achineMay eighthay</value>
 		<hint>Machine settings</hint>
 	</string>
+
+	<string>
+		<key>homeX</key>
+		<value>Home X</value>
+		<hint>Machine settings</hint>
+	</string>
+	<string>
+		<key>homeY</key>
+		<value>Home Y</value>
+		<hint>Machine settings</hint>
+	</string>
 	
 	<string>
 		<key>PaperWidth</key>
@@ -511,6 +522,11 @@ to check yourself.</value>
 	<string>
 		<key>MenuAdjustPaper</key>
 		<value>aperPay</value>
+		<hint>menu or dialog title</hint>
+	</string>
+	<string>
+		<key>MenuAdjustHome</key>
+		<value>Home</value>
 		<hint>menu or dialog title</hint>
 	</string>
 	<string>

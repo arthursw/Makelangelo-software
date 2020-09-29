@@ -16,11 +16,17 @@ public class Makelangelo5Properties extends Makelangelo3Properties {
 	public final static double COUNTERWEIGHT_H = 60;
 	public final static double PULLEY_RADIUS = 1.27;
 	public final static double MOTOR_WIDTH = 42;
+	public final static double MACHINE_WIDTH = 1764.0;
+	public final static double MACHINE_HEIGHT = 2.0*(260.0+360.0+250.0); // Height equals twice the distance from top to middle of paper
 
+	// This method is never used, it is replaced by robot.settings.homeX & homeY
 	@Override
 	public Point2D getHome() {
-		double beltLeft = 1025;
-		double beltRight = 1025;
+		double halfMachineWidth = MACHINE_WIDTH/2.0;
+		double machineTopToPaperBottom = 260+360+500; // home is at paper bottom by default
+		double beltLenght = Math.sqrt(halfMachineWidth*halfMachineWidth+machineTopToPaperBottom*machineTopToPaperBottom);
+		double beltLeft = beltLenght;
+		double beltRight = beltLenght;
 		
 		return super.FK(beltLeft,beltRight);
 	}
@@ -50,12 +56,12 @@ public class Makelangelo5Properties extends Makelangelo3Properties {
 		return true;
 	}
 	
-	public float getWidth() { return 650; }
-	public float getHeight() { return 1000; }
+	public float getWidth() { return (float) (MACHINE_WIDTH); }
+	public float getHeight() { return (float) MACHINE_HEIGHT; }
 
 	@Override
 	public boolean canAutoHome() {
-		return true;
+		return false;
 	}
 
 	@Override
